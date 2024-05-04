@@ -1,0 +1,104 @@
+/* basic article elements styling */
+article {
+  --img-scale: 1.001;
+  --title-color: black;
+  --link-icon-translate: -20px;
+  --link-icon-opacity: 0;
+  position: relative;
+  /* border-radius: 16px; */
+  box-shadow: none;
+  background: var(--card-color);
+  transform-origin: center;
+  transition: all 0.4s ease-in-out;
+  overflow: hidden;
+}
+
+article h2 {
+  margin: 0 0 18px 0;
+  font-family: "Bebas Neue", cursive;
+  font-size: 1.9rem;
+  letter-spacing: 0.06em;
+  color: var(--title-color);
+  transition: color 0.3s ease-out;
+}
+
+figure {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+article img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.article-body {
+  padding: 24px;
+}
+
+article a {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+article a:hover {
+  color: var(--secondary-color);
+}
+
+article a .icon {
+  min-width: 24px;
+  width: 24px;
+  height: 24px;
+  margin-left: 5px;
+  transform: translateX(var(--link-icon-translate));
+  opacity: var(--link-icon-opacity);
+  transition: all 0.3s;
+}
+
+/* Style the article wrapper on hover */
+article:hover {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+/* Show the link icon on hover */
+article:hover .icon {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Scale the image on hover with transition */
+article img {
+  transition: transform 0.4s ease-in-out;
+}
+
+article:hover img {
+  transform: scale(1.1);
+}
+
+.button-tags {
+
+  margin: 0 2px;
+}
+
+
+.button-tags a {
+  color: var(--secondary-color);
+}
+
+.button-tags a:hover {
+  color: var(--primary-color);
+}
+
+.sr-only:not(:focus):not(:active) {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}

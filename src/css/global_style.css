@@ -1,0 +1,38 @@
+/* Googlefont Poppins CDN Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+
+:root {
+  --primary-color: #007060;
+  --secondary-color: #FF5722;
+  --font-color: #333;
+  --bg-color: #f0f0f0;
+  --card-color: #ddd;
+
+  --menu-font-color: #ddd;
+  --menu-bg-color: #181F23;
+  --menu-hover-color: #ddd;
+}
+
+[data-theme="dark"] {
+  --primary-color: #007060;
+  --secondary-color: #FF5722;
+  --font-color: #e1e1ff;
+  --bg-color: #333;
+  --card-color: #222;
+
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  padding: 0 20px;
+  background-color: var(--bg-color);
+  color: var(--font-color);
+}

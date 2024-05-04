@@ -1,0 +1,26 @@
+.DisabledPagination {
+  display: inline-block;
+  background-color: var(--card-color);
+  color: red;
+  padding: 4px 20px;
+  pointer-events: none;
+  margin: 0 4px;
+}
+
+.EnabledPagination {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 4px 20px;
+  margin: 0 4px;
+}
+
+.EnabledPagination:hover {
+  background-color: var(--secondary-color);
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}

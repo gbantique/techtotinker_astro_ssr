@@ -1,0 +1,86 @@
+/* Right column */
+aside {
+  float: left;
+  width: 25%;
+  padding-left: 20px;
+  margin-top: 20px;
+}
+
+a {
+  list-style-type: none;
+  text-decoration: none;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, 
+make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+
+  aside {
+    width: 100%;
+    padding: 0;
+  }
+
+}
+
+
+
+
+/* Fake image */
+.fakeimg {
+  background-color: #aaa;
+  width: 100%;
+  padding: 20px;
+}
+
+/* Add a card effect for articles */
+.aside-card {
+  background-color: var(--card-color);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* VERY IMPORTANT FOR CARD APPEARANCE */
+/* Clear floats after the columns */
+.content:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+/* Sidebar Tags */
+
+aside .aside-card ul {
+  list-style-type: none;
+}
+
+aside .aside-card ul li {
+  padding: 4px 0;
+  transition: transform 0.3s ease;
+}
+
+aside .aside-card ul li:hover {
+  transform: translateX(10px);
+}
+
+aside .aside-card ul li a {
+  color: var(--font-color);
+  text-decoration: none;
+}
+
+aside .aside-card ul li a:hover {
+  color: var(--primary-color);
+}
+
+.tag-count {
+  color: white;
+  background-color: var(--secondary-color);
+  padding: 0 10px;
+  border-radius: 4px;
+  font-size: 0.7em;
+}
+
+.tags-icon {
+  color: var(--primary-color);
+  font-size: 0.6em;
+}

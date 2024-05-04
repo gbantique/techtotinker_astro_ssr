@@ -1,0 +1,54 @@
+---
+import { getCollection } from "astro:content";
+
+const allBlogArticles = (await getCollection("blogs")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const allArchiveArticles = (await getCollection("archives")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const allTidbitArticles = (await getCollection("tidbits")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const allArticles = [
+  ...allBlogArticles,
+  ...allArchiveArticles,
+  ...allTidbitArticles,
+];
+
+const tags: string[] = allArticles.flatMap((article: any) => article.data.tags);
+
+// const uniqueTags: string[] = [...new Set(tags)];
+
+// const tagCounts = tags.reduce((acc, tag) => {
+//   acc[tag] = (acc[tag] || 0) + 1;
+//   return acc;
+// }, {});
+const tagCounts = new Map();
+tags.forEach((tag) => {
+  tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+});
+
+const uniqueTagsWithCounts = Object.entries(tagCounts).map(
+  ([tagName, count]) => ({ tagName, count }),
+);
+---
+
+<ul>
+  {
+    uniqueTagsWithCounts.map(({ tagName, count }) => (
+      <li>
+        <a href={"/tags/" + tagName}>
+          <span class="tags-icon">
+            <i class="fas fa-tags" />
+          </span>
+          {tagName}
+          <span class="tag-count">{count}</span>
+        </a>
+      </li>
+    ))
+  }
+</ul>

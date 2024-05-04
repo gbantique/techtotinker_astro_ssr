@@ -1,0 +1,47 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import CardComponent from "../../components/CardComponent.astro";
+import Pagination from "../../components/Pagination.astro";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+import { ARTICLES_PER_PAGE } from "../../scripts/constants";
+
+// + to covert string to number
+// ! it could be a null
+const currentPage: number | null = +Astro.url.searchParams.get("page")! || 1;
+
+const allArchiveArticles: CollectionEntry<"archives">[] = (
+  await getCollection("archives")
+).sort(
+  (a: CollectionEntry<"archives">, b: CollectionEntry<"archives">) =>
+    b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const totalPages: number = Math.ceil(
+  allArchiveArticles.length / ARTICLES_PER_PAGE,
+);
+
+const articlesForPage: CollectionEntry<"archives">[] = allArchiveArticles.slice(
+  (currentPage - 1) * ARTICLES_PER_PAGE,
+  currentPage * ARTICLES_PER_PAGE,
+);
+---
+
+<MainLayout
+  title="Archives"
+  description="This page contains old articles posted in the TechToTinker website"
+>
+  <section class="articles">
+    {articlesForPage.map((article) => <CardComponent article={article} />)}
+  </section>
+  <div class="bottom-container">
+    <Pagination
+      currentPage={currentPage}
+      totalPages={totalPages}
+      disablePrevious={currentPage === 1}
+      disableNext={currentPage === totalPages}
+      pages="archives"
+    />
+  </div>
+</MainLayout>

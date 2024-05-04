@@ -1,0 +1,41 @@
+---
+import SearchForm from "./SearchForm.astro";
+---
+
+<nav id="myTopnav">
+  <div class="navbar">
+    <i class="fas fa-bars fa-menu"></i>
+    <div id="topbar-logo">
+      <a href="/">
+        <img
+          src="/src/assets/site/logo_h220.png"
+          alt="TechToTinker logo"
+          height="50px"
+        />
+      </a>
+    </div>
+    <div class="nav-links">
+      <div class="sidebar-logo">
+        <span class="logo-name"></span>
+        <i class="fas fa-times fa-xs fa-x"></i>
+      </div>
+      <ul class="links">
+        <li><a href="/">HOME</a></li>
+        <li>
+          <a href="/pages">PAGES</a>
+          <i class="fas fa-chevron-down htmlcss-arrow arrow"></i>
+          <ul class="htmlCss-sub-menu sub-menu">
+            <li><a href="/archives">Archives</a></li>
+            <li><a href="/blogs">Blogs</a></li>
+            <li><a href="/tidbits">Tidbits</a></li>
+          </ul>
+        </li>
+        <li><a href="/about">ABOUT</a></li>
+        <li><a href="/contact">CONTACT</a></li>
+      </ul>
+    </div>
+    <SearchForm />
+    <!-- <i onclick="toggleTheme()" id="mode-icon" class="fas fa-moon"></i> -->
+    <i id="mode-icon" class="fas fa-moon"></i>
+  </div>
+</nav>

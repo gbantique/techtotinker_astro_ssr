@@ -1,0 +1,71 @@
+---
+// component import
+import HeaderSection from "../components/HeaderSection.astro";
+import NavBar from "../components/NavBar.astro";
+import AsideSection from "../components/AsideSection.astro";
+import FooterSection from "../components/FooterSection.astro";
+
+const {
+  title = "TechToTinker",
+  description = "Where technology is explored and shared",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link href="/src/assets/site/icon.svg" rel="icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/src/css/global_style.css" />
+    <link rel="stylesheet" href="/src/css/utility_style.css" />
+    <link rel="stylesheet" href="/src/css/card_style.css" />
+
+    <link rel="stylesheet" href="/src/css/header_style.css" />
+    <link rel="stylesheet" href="/src/css/navbar_style.css" />
+    <link rel="stylesheet" href="/src/css/main_style.css" />
+    <link rel="stylesheet" href="/src/css/aside_style.css" />
+    <link rel="stylesheet" href="/src/css/footer_style.css" />
+
+    <title>TechToTinker - {title}</title>
+  </head>
+
+  <body>
+    <HeaderSection />
+
+    <NavBar />
+
+    <!-- <BreadcrumbsSection /> -->
+
+    <!-- CONTENT Container -->
+    <div class="content">
+      <main>
+        <!-- 
+        <div class="top-container">
+        </div>
+        <section class="default">
+        </section>
+        <section class="articles">
+        </section>
+        <div class="bottom-container">
+        </div>
+        -->
+        <slot />
+      </main>
+
+      <AsideSection />
+    </div>
+
+    <FooterSection />
+
+    <script src="/src/scripts/navbar_script.js"></script>
+    <script src="/src/scripts/darkmode_script.js"></script>
+  </body>
+</html>

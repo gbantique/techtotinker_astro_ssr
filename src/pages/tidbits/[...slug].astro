@@ -1,0 +1,77 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import RelatedArticle from "../../components/RelatedArticle.astro";
+import Tags from "../../components/Tags.astro";
+import { getCollection } from "astro:content";
+// import type { CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
+import { formatDate } from "../../scripts/utils";
+
+// export async function getStaticPaths() {
+//   const allArchiveArticles: CollectionEntry<'tidbits'>[] = await getCollection('tidbits');
+
+//   return allArchiveArticles.map(entry => ({
+//     params: {
+//       slug: entry.slug
+//     },
+//     props: {entry}
+//   }));
+// }
+
+// const { entry } = Astro.props;
+
+const { slug } = Astro.params;
+if (slug === undefined) {
+  throw new Error("Slug is required");
+}
+
+const entry = await getEntry("tidbits", slug);
+if (entry === undefined) {
+  return Astro.redirect("/404");
+}
+
+const { Content } = await entry.render();
+
+// Get all articles
+const allArticles = await Promise.all([
+  getCollection("blogs"),
+  getCollection("archives"),
+  getCollection("tidbits"),
+]);
+
+// Flatten and sort all articles by date
+const flattenedArticles = allArticles
+  .flat()
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Get tags of the current entry
+const entryTags = entry.data.tags;
+
+// Filter related articles based on matching tags
+const relatedArticles = flattenedArticles.filter((article) =>
+  article.data.tags.some((tag) => entryTags.includes(tag)),
+);
+
+// Remove the current article from related articles
+const filteredRelatedArticles = relatedArticles.filter(
+  (article) => article.slug !== slug,
+  // (article) => article.slug !== entry.slug,
+);
+---
+
+<MainLayout>
+  <section class="default">
+    <hr />
+    <a href="/tidbits">Back To Tidbits</a>
+    <br />
+    <br />
+    <h2>{entry.data.title}</h2>
+    <p>
+      Written by {entry.data.author} on {formatDate(entry.data.date)}
+    </p>
+    <Tags tags={entry.data.tags} />
+    <img src={"/images/" + entry.data.image} alt="Article Image" />
+    <Content />
+  </section>
+  <RelatedArticle articles={filteredRelatedArticles} />
+</MainLayout>

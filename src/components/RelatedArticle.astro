@@ -1,0 +1,27 @@
+---
+const { articles } = Astro.props;
+
+// interface Props {
+//   articles: CollectionEntry<"blogs">;
+// }
+// console.log(articles);
+---
+
+<div class="bottom-container">
+  <br />
+  <hr />
+  <h2>Related Articles</h2>
+  <ul>
+    {
+      articles.map(
+        (article: { collection: any; slug: any; data: { title: unknown } }) => (
+          <li>
+            <a href={`/${article.collection}/${article.slug}`}>
+              {article.data.title}
+            </a>
+          </li>
+        ),
+      )
+    }
+  </ul>
+</div>

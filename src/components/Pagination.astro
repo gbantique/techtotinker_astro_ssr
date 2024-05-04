@@ -1,0 +1,41 @@
+---
+const { currentPage, totalPages, disablePrevious, disableNext, pages } =
+  Astro.props;
+
+// interface Props {
+//   currentPage: number;
+//   totalPages: number;
+//   disablePrevious: boolean;
+//   disableNext: boolean;
+//   pages: string;
+// }
+---
+
+<div class="pagination-container">
+  <a
+    href={"/" + pages + "?page=" + (currentPage - 1)}
+    class={disablePrevious ? "DisabledPagination" : "EnabledPagination"}
+  >
+    <i class="fas fa-hand-point-left"></i>
+  </a>
+  {
+    Array.from({ length: totalPages }, (_, index) => {
+      const pageNumber = index + 1;
+      const isCurrent = pageNumber === currentPage;
+      return (
+        <a
+          href={"/" + pages + "?page=" + pageNumber}
+          class={isCurrent ? "DisabledPagination" : "EnabledPagination"}
+        >
+          {isCurrent ? <i class="fas fa-thumbs-up" /> : pageNumber}
+        </a>
+      );
+    })
+  }
+  <a
+    href={"/" + pages + "?page=" + (currentPage + 1)}
+    class={disableNext ? "DisabledPagination" : "EnabledPagination"}
+  >
+    <i class="fas fa-hand-point-right"></i>
+  </a>
+</div>

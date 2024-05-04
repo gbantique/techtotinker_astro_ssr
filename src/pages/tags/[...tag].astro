@@ -1,0 +1,62 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import CardComponent from "../../components/CardComponent.astro";
+import Pagination from "../../components/Pagination.astro";
+
+import { getCollection } from "astro:content";
+
+import { ARTICLES_PER_PAGE } from "../../scripts/constants";
+
+// + to covert string to number
+// ! it could be a null
+const currentPage: number | null = +Astro.url.searchParams.get("page")! || 1;
+
+const { tag } = Astro.params;
+if (tag === undefined) {
+  throw new Error("Tag is required");
+}
+
+const allBlogArticles = (await getCollection("blogs")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const allArchiveArticles = (await getCollection("archives")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const allTidbitArticles = (await getCollection("tidbits")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const allArticles = [
+  ...allBlogArticles,
+  ...allArchiveArticles,
+  ...allTidbitArticles,
+];
+
+const tagArticles = allArticles.filter((article) =>
+  article.data.tags.includes(tag),
+);
+
+const totalPages: number = Math.ceil(tagArticles.length / ARTICLES_PER_PAGE);
+
+const articlesForPage = tagArticles.slice(
+  (currentPage - 1) * ARTICLES_PER_PAGE,
+  currentPage * ARTICLES_PER_PAGE,
+);
+---
+
+<MainLayout title="Articles">
+  <section class="articles">
+    {articlesForPage.map((article) => <CardComponent article={article} />)}
+  </section>
+  <div class="bottom-container">
+    <Pagination
+      currentPage={currentPage}
+      totalPages={totalPages}
+      disablePrevious={currentPage === 1}
+      disableNext={currentPage === totalPages}
+      pages={"tags/" + tag}
+    />
+  </div>
+</MainLayout>

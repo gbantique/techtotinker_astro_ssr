@@ -1,0 +1,53 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import CardComponent from "../components/CardComponent.astro";
+
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+const query: string | null = Astro.url.searchParams.get("query");
+
+const allArchiveArticles: CollectionEntry<"archives">[] =
+  await getCollection("archives");
+const allBlogArticles: CollectionEntry<"blogs">[] =
+  await getCollection("blogs");
+const allTidbitArticles: CollectionEntry<"tidbits">[] =
+  await getCollection("tidbits");
+
+const allArticles = [
+  ...allBlogArticles,
+  ...allArchiveArticles,
+  ...allTidbitArticles,
+];
+
+// Filter articles based on query
+const searchResults = allArticles.filter((article) => {
+  const titleMatch: boolean = article.data.title
+    .toLowerCase()
+    .includes(query!.toLowerCase());
+
+  const bodyMatch: boolean = article.body
+    .toLowerCase()
+    .includes(query!.toLowerCase());
+
+  const slugMatch: boolean = article.slug
+    .toLowerCase()
+    .includes(query!.toLowerCase());
+
+  return titleMatch || bodyMatch || slugMatch;
+});
+---
+
+<MainLayout title="Search Results">
+  <section class="default">
+    <h2>
+      Results for <strong style="color:var(--primary-color);">
+        {query} :</strong
+      >
+    </h2>
+    <br />
+  </section>
+  <section class="articles">
+    {searchResults.map((article) => <CardComponent article={article} />)}
+  </section>
+</MainLayout>

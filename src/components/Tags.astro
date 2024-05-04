@@ -1,0 +1,19 @@
+---
+import { capitalize } from "../scripts/utils";
+
+const { tags } = Astro.props;
+
+// interface Props {
+//   tags: string[];
+// }
+---
+
+<div>
+  {
+    tags.map((tag: string) => (
+      <span class="button-tags">
+        <a href={"/tags/" + tag}>#{capitalize(tag)} </a>
+      </span>
+    ))
+  }
+</div>
